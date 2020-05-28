@@ -1,11 +1,18 @@
-// import sqlite3 
-const sqlite3 = require('sqlite3').verbose();
+// import mysql2
+const mysql = require('mysql2')
 
 // import inquirer 
 const inquirer = require('inquirer'); 
 
-// importing inputCheck
-// const inputCheck = require('./utils/inputCheck');
+// import console.table
+const cTable = require('console.table'); 
+
+// connection to database
+const connection = mysql.creatConnection({
+  host: 'localhost',
+  user: 'root',
+  database: 'test'
+}); 
 
 // port destination 
 const PORT = process.env.PORT || 3001; 
@@ -16,12 +23,3 @@ const app = express();
 // express middleware 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); 
-
-// connect to database
-const db = new sqlite3.Database('./db/election.db', err => {
-    if (err) {
-      return console.error(err.message);
-    }
-  
-    console.log('Connected to the election database.');
-  });
