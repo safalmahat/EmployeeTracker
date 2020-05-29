@@ -7,19 +7,35 @@ const inquirer = require('inquirer');
 // import console.table
 const cTable = require('console.table'); 
 
-// connection to database
-const connection = mysql.creatConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'test'
-}); 
+// import connection 
+const connection = require('./connection')
 
-// port destination 
-const PORT = process.env.PORT || 3001; 
-
-// app expression
-const app = express(); 
-
-// express middleware 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json()); 
+// inquirer prompt for first action
+const promptUser = () => {
+  return inquirer.prompt ([
+    {
+      type: 'list',
+      name: 'choices', 
+      message: 'What would you like to do?',
+      choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee']
+    }
+  ])
+}
+promptUser()
+  // .then(promptProject)
+  // .then(portfolioData => {
+  //   return generatePage(portfolioData);
+  // })
+  // .then(pageHTML => {
+  //   return writeFile(pageHTML);
+  // })
+  // .then(writeFileResponse => {
+  //   console.log(writeFileResponse);
+  //   return copyFile();
+  // })
+  // .then(copyFileResponse => {
+  //   console.log(copyFileResponse);
+  // })
+  // .catch(err => {
+  //   console.log(err);
+  // });
