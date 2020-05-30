@@ -4,8 +4,6 @@ const mysql = require('mysql2')
 const inquirer = require('inquirer'); 
 // import console.table
 const cTable = require('console.table'); 
-// import connection 
-const connection = require('./connection')
 
 // connection to database
 const connection = mysql.createConnection({
@@ -14,13 +12,6 @@ const connection = mysql.createConnection({
   password: 'Champion1!',
   database: 'employee_db'
 });
-
-connection.promise().query("SELECT 1")
-.then( ([rows,fields]) => {
-  console.log(rows);
-})
-.catch(console.log)
-.then( () => con.end());
 
 connection.connect(err => {
   if (err) throw err;
@@ -46,10 +37,74 @@ const promptUser = () => {
                 'Add a department', 
                 'Add a role', 
                 'Add an employee', 
-                'Update an employee']
+                'Update an employee',
+                'No Action']
     }
   ])
+  .then((answers) => {
+    const { choices } = answers; 
+
+    if (choices === "View all departments") {
+      showDepartments()
+    }
+
+    if (choices === "View all roles") {
+      showRoles()
+    }
+
+    if (choices === "View all employees") {
+      showEmployees()
+    }
+
+    if (choices === "Add a department") {
+      addDepartment()
+    }
+    if (choices === "No Action") {
+      connection.end()
+    }
+  })
 };
+
+// function to show all departments 
+showDepartments = () => {
+  console.log('Showing all departments...\n');
+  const sql = `SELECT * FROM department`; 
+
+  connection.promise().query(sql, (err, rows) => {
+    if (err) throw err;
+    console.table(rows);
+    connection.end() 
+  })
+};
+
+// function to show all roles 
+showRoles = () => {
+  console.log('Showing all roles...\n');
+  const sql = `SELECT role.*, department.name 
+               AS department
+               FROM role
+               LEFT JOIN department
+               ON role.department_id = department.id
+               WHERE role.id = ?`; 
+  
+  connection.promise().query(sql, (err, rows) => {
+    if (err) throw err; 
+    console.table(rows); 
+    connection.end()
+  })
+};
+
+// function to show all employees 
+showEmployees = () => {
+  console.log('Showing all employees...\n'); 
+  const sql = `SELECT * FROM employee`; 
+
+  connection.promise().query(sql, (err, rows) => {
+    if (err) throw err; 
+    console.table(rows);
+    connection.end()
+  })
+}
 
 // function to add a department 
 addDepartment = () => {
@@ -60,5 +115,38 @@ addDepartment = () => {
       message: "What department do you want to add?"
     }
   ])
+  .then(answer => {
+    const sql = `INSERT INTO department (name)
+                 VALUES (?)`;
+    connection.query(sql, answer.addDept, (err, result) => {
+      if (err) throw err;
+      console.log('Added' + answer.addDept + " to departments!"); 
+
+      showDepartments();
+    })
+  })
+};
+
+// function to add a role 
+addRole = () => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'addRole',
+      message: "What is the employee's first name?"
+    }
+  ])
+  .then(answer => {
+
+  })
+}
+
+// function to add an employee
+addEmployee = () => {
+
+}
+
+// function to update an employee 
+updateEmployee = () => {
 
 }
