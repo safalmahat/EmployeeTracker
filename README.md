@@ -18,7 +18,7 @@ The user should clone the repository from GitHub. This application requires Node
 ## Usage 
 This application will allow users to view, add, and edit employees, roles, departments, and managers. 
 
-View walk through video via [Screencastify]()
+View walk through video via [Screencastify](assests/recording/employee-tracker.webm)
 
 ## License 
 This project is license under MIT
