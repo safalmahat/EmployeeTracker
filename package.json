@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nicolewallace09/employee-tracker.git"
+    "url": "git+https://github.com/safalmahat/EmployeeTracker.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nicolewallace09/employee-tracker/issues"
+    "url": "https://github.com/safalmahat/EmployeeTracker/issues"
   },
-  "homepage": "https://github.com/nicolewallace09/employee-tracker#readme",
+  "homepage": "https://github.com/safalmahat/EmployeeTracker#readme",
   "dependencies": {
     "console.table": "^0.10.0",
     "dotenv": "^8.2.0",
